@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>独立开发者导航站</title>
+    <style>
+    /* 导航站样式 - 紫色苹果风格 */
+    body {
+      font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8f6fd;
+      color: #1d1d1f;
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+      padding: 16px 0;
+      margin-bottom: 30px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+    
+    .logo {
+      font-size: 22px;
+      font-weight: 600;
+      color: #6b42a9;
+      letter-spacing: -0.5px;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    nav ul li {
+      margin: 0 10px;
+    }
+    
+    nav ul li a {
+      color: #4e3a78;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 18px;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    nav ul li a:hover {
+      background-color: rgba(107, 66, 169, 0.08);
+    }
+    
+    .search-bar {
+      margin: 24px 0;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .search-bar input {
+      width: 60%;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      background-color: rgba(107, 66, 169, 0.06);
+      transition: all 0.3s ease;
+      color: #1d1d1f;
+    }
+    
+    .search-bar input:focus {
+      background-color: rgba(107, 66, 169, 0.1);
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(107, 66, 169, 0.15);
+    }
+    
+    .card-box {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+      margin-bottom: 30px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(107, 66, 169, 0.08);
+    }
+    
+    .card-box:hover {
+      box-shadow: 0 4px 24px rgba(107, 66, 169, 0.15);
+    }
+    
+    .card-box-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(107, 66, 169, 0.08);
+      background-color: rgba(107, 66, 169, 0.03);
+    }
+    
+    .card-box-header h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #6b42a9;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+    
+    .card-box-content {
+      padding: 24px;
+    }
+    
+    .sub-category h3 {
+      font-size: 16px;
+      color: #8458c7;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+      border-bottom: 1px solid rgba(107, 66, 169, 0.1);
+      padding-bottom: 8px;
+    }
+    
+    .site-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    
+    .site-item {
+      display: flex;
+      flex-direction: column;
+      background-color: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid rgba(107, 66, 169, 0.1);
+    }
+    
+    .site-item:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 8px 24px rgba(107, 66, 169, 0.15);
+      border-color: rgba(107, 66, 169, 0.2);
+    }
+    
+    .site-item a {
+      display: block;
+      padding: 16px;
+      text-decoration: none;
+      color: #1d1d1f;
+      height: 100%;
+    }
+    
+    .site-item-icon {
+      width: 42px;
+      height: 42px;
+      margin-right: 16px;
+      border-radius: 50%;
+      background-color: rgba(107, 66, 169, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #6b42a9;
+      font-size: 18px;
+    }
+    
+    .site-item-info {
+      display: flex;
+      align-items: center;
+    }
+    
+    .site-item-title {
+      font-weight: 500;
+      margin-bottom: 6px;
+      font-size: 15px;
+      color: #4e3a78;
+    }
+    
+    .site-item-desc {
+      font-size: 13px;
+      color: #7a7a7a;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 40px;
+      color: #8458c7;
+      font-size: 13px;
+      border-top: 1px solid rgba(107, 66, 169, 0.1);
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner container">
+            <div class="logo">独立开发者导航</div>
+            <nav>
+                <ul>
+                    <li><a href="#调研部分">调研部分</a></li>
+                    <li><a href="#上站必备">上站必备</a></li>
+                    <li><a href="#竞品调研">竞品调研</a></li>
+                    <li><a href="#上站模板">上站模板</a></li>
+                    <li><a href="#资讯部分">资讯部分</a></li>
+                    <li><a href="#生财精华">生财精华</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" placeholder="搜索导航内容...">
+        </div>
+
+        <div class="card-box" id="调研部分">
+            <div class="card-box-header">
+                <h2>需求收集和关键词调研部分</h2>
+            </div>
+            <div class="card-box-content">
+                <div class="sub-category">
+                    <h3>谷歌下拉词</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://www.searchsuggest.tips/?keyword=" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">S</div>
+                                    <div>
+                                        <div class="site-item-title">SearchSuggest Tips</div>
+                                        <div class="site-item-desc">谷歌搜索下拉词查询工具</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>Toolify榜单</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://www.toolify.ai/Best-AI-Tools-revenue" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">T</div>
+                                    <div>
+                                        <div class="site-item-title">Best AI Tools Revenue</div>
+                                        <div class="site-item-desc">AI工具收入排行榜</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>AI导航站需求列表</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://theresanalforthat.com/requests" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">A</div>
+                                    <div>
+                                        <div class="site-item-title">There's An AI For That</div>
+                                        <div class="site-item-desc">AI产品需求列表</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>关键词难度</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://ahrefs.com/keyword-difficulty" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">A</div>
+                                    <div>
+                                        <div class="site-item-title">Ahrefs Keyword Difficulty</div>
+                                        <div class="site-item-desc">关键词难度分析工具</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box" id="上站必备">
+            <div class="card-box-header">
+                <h2>上站必备</h2>
+            </div>
+            <div class="card-box-content">
+                <div class="sub-category">
+                    <h3>域名查询</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://leandomainsearch.com/" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">L</div>
+                                    <div>
+                                        <div class="site-item-title">Lean Domain Search</div>
+                                        <div class="site-item-desc">域名查询工具</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://query.domains/" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">Q</div>
+                                    <div>
+                                        <div class="site-item-title">Query Domains</div>
+                                        <div class="site-item-desc">域名批量查询工具</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://instantdomainsearch.com/?q=" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">I</div>
+                                    <div>
+                                        <div class="site-item-title">Instant Domain Search</div>
+                                        <div class="site-item-desc">即时域名查询</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>域名注册</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://spaceship.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">S</div>
+                                    <div>
+                                        <div class="site-item-title">Spaceship</div>
+                                        <div class="site-item-desc">域名注册服务</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://namecheap.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">N</div>
+                                    <div>
+                                        <div class="site-item-title">Namecheap</div>
+                                        <div class="site-item-desc">平价域名注册商</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://porkbun.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">P</div>
+                                    <div>
+                                        <div class="site-item-title">Porkbun</div>
+                                        <div class="site-item-desc">域名注册平台</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>代码&网站托管</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://github.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">G</div>
+                                    <div>
+                                        <div class="site-item-title">GitHub</div>
+                                        <div class="site-item-desc">代码托管平台</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://cloudflare.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">C</div>
+                                    <div>
+                                        <div class="site-item-title">Cloudflare</div>
+                                        <div class="site-item-desc">网站CDN与安全服务</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://vercel.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">V</div>
+                                    <div>
+                                        <div class="site-item-title">Vercel</div>
+                                        <div class="site-item-desc">前端应用托管平台</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>数据后台</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://search.google.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">G</div>
+                                    <div>
+                                        <div class="site-item-title">Google Search Console</div>
+                                        <div class="site-item-desc">谷歌搜索控制台</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://analytics.google.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">G</div>
+                                    <div>
+                                        <div class="site-item-title">Google Analytics</div>
+                                        <div class="site-item-desc">谷歌数据分析</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://www.bing.com/webmasters/submituri" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">B</div>
+                                    <div>
+                                        <div class="site-item-title">Bing Webmaster Tools</div>
+                                        <div class="site-item-desc">必应站长工具</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box" id="竞品调研">
+            <div class="card-box-header">
+                <h2>竞品调研</h2>
+            </div>
+            <div class="card-box-content">
+                <div class="sub-category">
+                    <h3>流量和关键词分析</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://aitdk.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">A</div>
+                                    <div>
+                                        <div class="site-item-title">AITDK</div>
+                                        <div class="site-item-desc">AI工具流量分析平台</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>外链分析</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://ahrefs.com/free-seo-tools" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">A</div>
+                                    <div>
+                                        <div class="site-item-title">Ahrefs Free SEO Tools</div>
+                                        <div class="site-item-desc">免费SEO工具集</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>网站关键词</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://semrush.com" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">S</div>
+                                    <div>
+                                        <div class="site-item-title">SEMrush</div>
+                                        <div class="site-item-desc">专业SEO分析工具</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box" id="上站模板">
+            <div class="card-box-header">
+                <h2>上站模板</h2>
+            </div>
+            <div class="card-box-content">
+                <div class="sub-category">
+                    <h3>开源模板</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://github.com/openRin/Rin" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">R</div>
+                                    <div>
+                                        <div class="site-item-title">Rin - Cloudflare Blog</div>
+                                        <div class="site-item-desc">Cloudflare博客模板</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/ixartz/Next.js-Bolierplate" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">N</div>
+                                    <div>
+                                        <div class="site-item-title">Next.js Boilerplate</div>
+                                        <div class="site-item-desc">Next.js项目模板</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/ixartz/SaaS-Bolierplate" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">S</div>
+                                    <div>
+                                        <div class="site-item-title">SaaS Boilerplate</div>
+                                        <div class="site-item-desc">SaaS项目模板</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">N</div>
+                                    <div>
+                                        <div class="site-item-title">Next.js Landing Page</div>
+                                        <div class="site-item-desc">Next.js落地页模板</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/ixartz/Astro-bolierplate" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">A</div>
+                                    <div>
+                                        <div class="site-item-title">Astro Boilerplate</div>
+                                        <div class="site-item-desc">Astro项目模板</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>SaaS模板</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://github.com/wasp-lang/open-saas/" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">O</div>
+                                    <div>
+                                        <div class="site-item-title">Open SaaS</div>
+                                        <div class="site-item-desc">开源SaaS项目模板</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/oduf/justship" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">J</div>
+                                    <div>
+                                        <div class="site-item-title">JustShip</div>
+                                        <div class="site-item-desc">快速上线SaaS模板</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/saasfly/saasfly" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">S</div>
+                                    <div>
+                                        <div class="site-item-title">SaaSFly</div>
+                                        <div class="site-item-desc">SaaS开发框架</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/mundane799699/xlike-web" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">S</div>
+                                    <div>
+                                        <div class="site-item-title">ShipFast</div>
+                                        <div class="site-item-desc">快速发布SaaS产品</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>AI相关</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://github.com/ai-aige-studio/Viggle-AI-WebUI" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">V</div>
+                                    <div>
+                                        <div class="site-item-title">Viggle AI WebUI</div>
+                                        <div class="site-item-desc">AI应用Web界面</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/Pwntus/change-hairstyle-al" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">C</div>
+                                    <div>
+                                        <div class="site-item-title">Change Hairstyle AI</div>
+                                        <div class="site-item-desc">AI换发型应用</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://github.com/replicate/green-screen-creator" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">G</div>
+                                    <div>
+                                        <div class="site-item-title">Green Screen Creator</div>
+                                        <div class="site-item-desc">AI绿幕创建工具</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box" id="资讯部分">
+            <div class="card-box-header">
+                <h2>资讯部分</h2>
+            </div>
+            <div class="card-box-content">
+                <div class="sub-category">
+                    <h3>社区与论坛</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://liberating-doll-b8a.notion.site/Reddit-1a8e8ae691b18021839ecba8074e530b" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">R</div>
+                                    <div>
+                                        <div class="site-item-title">Reddit子社区</div>
+                                        <div class="site-item-desc">独立开发者相关的Reddit社区</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://news.ycombinator.com/item?id=42373343" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">H</div>
+                                    <div>
+                                        <div class="site-item-title">HN $500/month项目讨论</div>
+                                        <div class="site-item-desc">小收入项目讨论</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>SEO资源</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content?hl=zh-cn" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">G</div>
+                                    <div>
+                                        <div class="site-item-title">Google SEO基础知识</div>
+                                        <div class="site-item-desc">谷歌搜索引擎优化基础</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://ahrefs.com/websites#trending" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">A</div>
+                                    <div>
+                                        <div class="site-item-title">Ahrefs热门网站</div>
+                                        <div class="site-item-desc">热门网站趋势</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>数据报告</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://docs.google.com/spreadsheets/d/1QOdqq9KkjQjLJZO43vc1ph2mEEsMLXzTDA7rqd=0#gld=0" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">A</div>
+                                    <div>
+                                        <div class="site-item-title">AI Video SaaS工具列表</div>
+                                        <div class="site-item-desc">AI视频工具汇总</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://docs.google.com/spreadsheets/d/1eUnk44pIURML2VWFfXkzNmm-Wkuuam9_ym5Po_Q74M/edit?gld=83151001#gld=83151001" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">独</div>
+                                    <div>
+                                        <div class="site-item-title">独立开发者报告2.0</div>
+                                        <div class="site-item-desc">独立开发者数据报告</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-box" id="生财精华">
+            <div class="card-box-header">
+                <h2>生财精华帖</h2>
+            </div>
+            <div class="card-box-content">
+                <div class="sub-category">
+                    <h3>2025年</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/1525814845844482" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">独</div>
+                                    <div>
+                                        <div class="site-item-title">不要轻易称自己为独立开发者</div>
+                                        <div class="site-item-desc">2025/3/1</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/2858151258225521" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">AI</div>
+                                    <div>
+                                        <div class="site-item-title">AI编辑器第一课</div>
+                                        <div class="site-item-desc">2025-02-06</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>2024年</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/4848511545851418" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">翻</div>
+                                    <div>
+                                        <div class="site-item-title">翻石头，是独立开发者的日常修行</div>
+                                        <div class="site-item-desc">2024-11-13</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/5122484888125484" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">自</div>
+                                    <div>
+                                        <div class="site-item-title">用AI自学编程的顺序机制</div>
+                                        <div class="site-item-desc">2024-07-23</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>2023年</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/188545124485142" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">善</div>
+                                    <div>
+                                        <div class="site-item-title">善用黑科技工具</div>
+                                        <div class="site-item-desc">2023-08-20</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/811452228445512" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">产</div>
+                                    <div>
+                                        <div class="site-item-title">什么产品好做？三个一</div>
+                                        <div class="site-item-desc">2023-12-07</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/814822455488822" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">M</div>
+                                    <div>
+                                        <div class="site-item-title">如何快速做出产品MVP</div>
+                                        <div class="site-item-desc">2023-02-09</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sub-category">
+                    <h3>2022年及以前</h3>
+                    <div class="site-list">
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/212485241245121" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">I</div>
+                                    <div>
+                                        <div class="site-item-title">如何获得产品Idea</div>
+                                        <div class="site-item-desc">2022-11-10</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/415414825512158" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">完</div>
+                                    <div>
+                                        <div class="site-item-title">完美的创业项目</div>
+                                        <div class="site-item-desc">2022-05-11</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/18421425552812" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">判</div>
+                                    <div>
+                                        <div class="site-item-title">判断项目行不行的极简方法</div>
+                                        <div class="site-item-desc">2022-04-25</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/218514241452421" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">G</div>
+                                    <div>
+                                        <div class="site-item-title">Google SEO技巧</div>
+                                        <div class="site-item-desc">2021-09-10</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="site-item">
+                            <a href="https://scys.com/articleDetail/xq_topic/182888851425182" target="_blank">
+                                <div class="site-item-info">
+                                    <div class="site-item-icon">流</div>
+                                    <div>
+                                        <div class="site-item-title">网站流量秘籍</div>
+                                        <div class="site-item-desc">2021-06-21</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 独立开发者导航 - 做有用的导航站</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 搜索功能
+        const searchInput = document.querySelector('.search-bar input');
+        const siteItems = document.querySelectorAll('.site-item');
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const searchText = this.value.toLowerCase();
+                
+                siteItems.forEach(item => {
+                    const title = item.querySelector('.site-item-title').textContent.toLowerCase();
+                    const desc = item.querySelector('.site-item-desc').textContent.toLowerCase();
+                    
+                    if (title.includes(searchText) || desc.includes(searchText)) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // 平滑滚动到锚点
+        const navLinks = document.querySelectorAll('nav a');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html> 
